@@ -18,9 +18,6 @@ from models import (
     AcademicSession, Semester, GradeConfig,
 )
 
-DEMO_PASSWORD_EXAM_OFFICER = "admin123"
-DEMO_PASSWORD_LECTURER = "lecturer123"
-
 
 SAMPLE_COURSES = [
     # (code, title, level, semester_name, credit_unit, course_type)
