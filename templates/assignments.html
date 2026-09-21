@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Course Assignment{% endblock %}
+{% block content %}
+<h3 class="mb-3"><i class="fa-solid fa-diagram-project"></i> Course Assignment</h3>
+<p class="text-muted">Academic Session: <strong>{{ session_obj.name if session_obj else '-' }}</strong> &middot; A lecturer cannot be assigned more than {{ max_courses }} courses per semester.</p>
+
+<div class="card mb-4">
+  <div class="card-header">Assign a Course</div>
+  <div class="card-body">
+    <form method="POST" class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">Course</label>
+        <select name="course_id" class="form-select" required>
+          {% for course in courses %}
+          <option value="{{ course.id }}">{{ course.code }} - {{ course.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Lecturer</label>
+        <select name="lecturer_id" class="form-select" required>
+          {% for lecturer in lecturers %}
+          <option value="{{ lecturer.id }}">{{ lecturer.name }} ({{ lecturer.assignments|length }}/{{ max_courses }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Semester</label>
+        <select name="semester_id" class="form-select" required>
+          {% for semester in semesters %}
+          <option value="{{ semester.id }}">{{ semester.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-plus"></i> Assign</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">Current Assignments ({{ session_obj.name if session_obj else '-' }})</div>
+  <div class="card-body table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Lecturer</th>
+          <th>Semester</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in all_assignments %}
+        <tr>
+          <td>{{ a.course.code }} - {{ a.course.title }}</td>
+          <td>{{ a.lecturer.name }}</td>
+          <td>{{ a.semester.name }}</td>
+          <td>
+            <form action="{{ url_for('admin.delete_assignment', assignment_id=a.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Remove this assignment?');">
+              <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-xmark"></i></button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" class="text-center text-muted">No assignments yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

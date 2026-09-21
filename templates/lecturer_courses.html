@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}My Courses{% endblock %}
+{% block content %}
+<h3 class="mb-3"><i class="fa-solid fa-book"></i> My Assigned Courses</h3>
+<div class="card">
+  <div class="card-body table-responsive">
+    <table class="table table-hover align-middle">
+      <thead><tr><th>Code</th><th>Title</th><th>Level</th><th>Semester</th><th>Units</th><th></th></tr></thead>
+      <tbody>
+        {% for a in assignments %}
+        <tr>
+          <td>{{ a.course.code }}</td>
+          <td>{{ a.course.title }}</td>
+          <td>{{ a.course.level }}</td>
+          <td>{{ a.semester.name }}</td>
+          <td>{{ a.course.credit_unit }}</td>
+          <td><a href="{{ url_for('lecturer.course_students', course_id=a.course.id) }}" class="btn btn-sm btn-outline-primary">Manage Results</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" class="text-center text-muted">No courses assigned yet for this session. Please contact the Examination Officer.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

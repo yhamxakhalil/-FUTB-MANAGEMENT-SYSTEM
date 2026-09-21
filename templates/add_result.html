@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Enter Result{% endblock %}
+{% block nav %}
+<a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+<a href="{{ url_for('admin_logout') }}">Sign out</a>
+{% endblock %}
+{% block content %}
+<h2>Enter / Update Result</h2>
+<form method="POST">
+    <label>Student</label>
+    <select name="student_id" required>
+        {% for s in students %}
+        <option value="{{ s['id'] }}">{{ s['matric_no'] }} - {{ s['full_name'] }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Course</label>
+    <select name="course_id" required>
+        {% for c in courses %}
+        <option value="{{ c['id'] }}">{{ c['code'] }} - {{ c['title'] }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Semester</label>
+    <input type="text" name="semester" placeholder="2025/2026 - First Semester" required>
+
+    <label>CA score (0 to 30)</label>
+    <input type="number" name="ca_score" step="0.5" min="0" max="30" required>
+
+    <label>Exam score (0 to 70)</label>
+    <input type="number" name="exam_score" step="0.5" min="0" max="70" required>
+
+    <button type="submit">Save result</button>
+</form>
+<p class="small-note">Grade and grade point are computed automatically from the two scores. Entering a result again for the same student, course, and semester will update it.</p>
+{% endblock %}

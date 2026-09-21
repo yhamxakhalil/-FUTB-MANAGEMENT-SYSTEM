@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Result Search{% endblock %}
+{% block content %}
+<h3 class="mb-3"><i class="fa-solid fa-magnifying-glass"></i> Student Result Search</h3>
+
+<div class="card mb-4" style="max-width: 560px;">
+  <div class="card-body">
+    <form method="POST" class="row g-2">
+      <div class="col-8">
+        <input type="text" name="reg_number" class="form-control" placeholder="e.g. SIT/SWE/24/0003" required value="{{ student.reg_number if student else '' }}">
+      </div>
+      <div class="col-4">
+        <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if searched and not student %}
+<div class="alert alert-warning">No student found with that registration number.</div>
+{% endif %}
+
+{% if student %}
+<div class="card mb-4">
+  <div class="card-body">
+    <h5>{{ student.full_name }}</h5>
+    <p class="text-muted mb-0">
+      Reg. No: <strong>{{ student.reg_number }}</strong> &middot;
+      Level: <strong>{{ student.level }}</strong> &middot;
+      Session: <strong>{{ student.academic_session.name if student.academic_session else '-' }}</strong>
+    </p>
+  </div>
+</div>
+
+{% if semesters_summary %}
+  {% for sem in semesters_summary %}
+  <div class="card mb-3">
+    <div class="card-header">{{ sem.session }} - {{ sem.semester }} Semester</div>
+    <div class="card-body table-responsive">
+      <table class="table table-sm">
+        <thead>
+          <tr><th>Code</th><th>Title</th><th>Units</th><th>CA</th><th>Exam</th><th>Total</th><th>Grade</th><th>GP</th><th>QP</th></tr>
+        </thead>
+        <tbody>
+          {% for r in sem.rows %}
+          <tr>
+            <td>{{ r.course.code }}</td>
+            <td>{{ r.course.title }}</td>
+            <td>{{ r.course.credit_unit }}</td>
+            <td>{{ r.ca_score }}</td>
+            <td>{{ r.exam_score }}</td>
+            <td>{{ r.total_score }}</td>
+            <td>{{ r.grade }}</td>
+            <td>{{ r.grade_point }}</td>
+            <td>{{ r.quality_point }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p class="mb-0 text-end">
+        <strong>Total Units:</strong> {{ sem.total_units }} &middot;
+        <strong>Total Quality Points:</strong> {{ sem.total_quality_points }} &middot;
+        <strong>GPA:</strong> {{ sem.gpa }}
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="card bg-light">
+    <div class="card-body text-end">
+      <h5 class="mb-0">CGPA: {{ cgpa }}</h5>
+    </div>
+  </div>
+{% else %}
+<div class="alert alert-info">No released results found for this student yet.</div>
+{% endif %}
+{% endif %}
+{% endblock %}

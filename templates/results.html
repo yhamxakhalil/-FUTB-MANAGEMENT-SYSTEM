@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Results{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3><i class="fa-solid fa-list-check"></i> Results</h3>
+  <form action="{{ url_for('admin.release_all_approved') }}" method="POST" onsubmit="return confirm('Release all approved results?');">
+    <button type="submit" class="btn btn-success"><i class="fa-solid fa-paper-plane"></i> Release All Approved</button>
+  </form>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <form method="GET" class="row g-3">
+      <div class="col-md-3">
+        <label class="form-label small">Status</label>
+        <select name="status" class="form-select form-select-sm">
+          <option value="">All</option>
+          {% for s in statuses %}
+          <option value="{{ s }}" {{ 'selected' if status_filter == s }}>{{ s }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label small">Level</label>
+        <select name="level" class="form-select form-select-sm">
+          <option value="">All</option>
+          {% for level in [100, 200, 300, 400] %}
+          <option value="{{ level }}" {{ 'selected' if level_filter == level }}>{{ level }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small">Course</label>
+        <select name="course_id" class="form-select form-select-sm">
+          <option value="">All</option>
+          {% for c in courses %}
+          <option value="{{ c.id }}" {{ 'selected' if course_id_filter == c.id }}>{{ c.code }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small">Lecturer</label>
+        <select name="lecturer_id" class="form-select form-select-sm">
+          <option value="">All</option>
+          {% for l in lecturers %}
+          <option value="{{ l.id }}" {{ 'selected' if lecturer_id_filter == l.id }}>{{ l.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-1 d-flex align-items-end">
+        <button type="submit" class="btn btn-outline-primary btn-sm w-100"><i class="fa-solid fa-filter"></i></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Course</th>
+          <th>Lecturer</th>
+          <th>CA</th>
+          <th>Exam</th>
+          <th>Total</th>
+          <th>Grade</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in results %}
+        <tr>
+          <td>{{ r.student.full_name }}<br><small class="text-muted">{{ r.student.reg_number }}</small></td>
+          <td>{{ r.course.code }}</td>
+          <td>{{ r.lecturer.name }}</td>
+          <td>{{ r.ca_score }}</td>
+          <td>{{ r.exam_score }}</td>
+          <td>{{ r.total_score }}</td>
+          <td><span class="badge bg-light text-dark border">{{ r.grade }}</span></td>
+          <td>
+            <span class="badge status-badge status-{{ r.status|lower }}">{{ r.status }}</span>
+          </td>
+          <td>
+            {% if r.status == 'Submitted' %}
+            <form action="{{ url_for('admin.approve_result', result_id=r.id) }}" method="POST" class="d-inline">
+              <button class="btn btn-sm btn-outline-success"><i class="fa-solid fa-check"></i> Approve</button>
+            </form>
+            {% elif r.status == 'Approved' %}
+            <form action="{{ url_for('admin.release_result', result_id=r.id) }}" method="POST" class="d-inline">
+              <button class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-paper-plane"></i> Release</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="9" class="text-center text-muted">No results match the selected filters.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

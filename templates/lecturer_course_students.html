@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}{{ course.code }} - Students{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3><i class="fa-solid fa-users"></i> {{ course.code }} - {{ course.title }}</h3>
+  <form action="{{ url_for('lecturer.submit_all', course_id=course.id) }}" method="POST" onsubmit="return confirm('Submit all draft results for this course to the Examination Officer?');">
+    <button type="submit" class="btn btn-success"><i class="fa-solid fa-paper-plane"></i> Submit All Drafts</button>
+  </form>
+</div>
+<p class="text-muted">{{ course.level }} Level &middot; {{ course.credit_unit }} Unit(s) &middot; {{ course.semester.name }} Semester</p>
+
+<div class="card">
+  <div class="card-body table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Reg. Number</th>
+          <th>Name</th>
+          <th>CA</th>
+          <th>Exam</th>
+          <th>Total</th>
+          <th>Grade</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+        {% set result = existing_results.get(student.id) %}
+        <tr>
+          <td><code>{{ student.reg_number }}</code></td>
+          <td>{{ student.full_name }}</td>
+          <td>{{ result.ca_score if result else '-' }}</td>
+          <td>{{ result.exam_score if result else '-' }}</td>
+          <td>{{ result.total_score if result else '-' }}</td>
+          <td>{{ result.grade if result else '-' }}</td>
+          <td>
+            {% if result %}
+            <span class="badge status-badge status-{{ result.status|lower }}">{{ result.status }}</span>
+            {% else %}
+            <span class="badge bg-light text-dark border">Not Entered</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if result and result.status == 'Released' %}
+            <span class="text-muted small"><i class="fa-solid fa-lock"></i> Locked</span>
+            {% else %}
+            <a href="{{ url_for('lecturer.enter_result', course_id=course.id, student_id=student.id) }}" class="btn btn-sm btn-outline-primary">
+              <i class="fa-solid fa-pen"></i> {{ 'Edit' if result else 'Enter Score' }}
+            </a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

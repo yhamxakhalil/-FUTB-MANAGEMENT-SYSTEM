@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h3 class="mb-4"><i class="fa-solid fa-gauge"></i> Examination Officer Dashboard</h3>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-primary text-white">
+      <div class="card-body">
+        <div class="stat-number">{{ total_students }}</div>
+        <div class="stat-label">Total Students</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-success text-white">
+      <div class="card-body">
+        <div class="stat-number">{{ total_courses }}</div>
+        <div class="stat-label">Total Courses</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-info text-white">
+      <div class="card-body">
+        <div class="stat-number">{{ total_lecturers }}</div>
+        <div class="stat-label">Total Lecturers</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-warning text-dark">
+      <div class="card-body">
+        <div class="stat-number">{{ assigned_courses }}</div>
+        <div class="stat-label">Assigned Courses</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card stat-card bg-secondary text-white">
+      <div class="card-body">
+        <div class="stat-number">{{ submitted_results }}</div>
+        <div class="stat-label">Submitted Results</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card bg-dark text-white">
+      <div class="card-body">
+        <div class="stat-number">{{ approved_results }}</div>
+        <div class="stat-label">Approved Results</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card bg-success text-white">
+      <div class="card-body">
+        <div class="stat-number">{{ released_results }}</div>
+        <div class="stat-label">Released Results</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><i class="fa-solid fa-layer-group"></i> Students by Level</div>
+  <div class="card-body">
+    <div class="row text-center">
+      {% for level, count in students_by_level.items() %}
+      <div class="col-3">
+        <h4>{{ count }}</h4>
+        <div class="text-muted">{{ level }} Level</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

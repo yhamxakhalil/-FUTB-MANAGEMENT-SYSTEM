@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Lecturers{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3><i class="fa-solid fa-chalkboard-user"></i> Lecturers</h3>
+  <a href="{{ url_for('admin.add_lecturer') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Lecturer</a>
+</div>
+
+<div class="card">
+  <div class="card-body table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Login Username</th>
+          <th>Courses Assigned</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for lecturer in lecturers %}
+        <tr>
+          <td>{{ lecturer.name }}</td>
+          <td>{{ lecturer.email }}</td>
+          <td>{{ lecturer.phone or '-' }}</td>
+          <td><code>{{ lecturer.user.username if lecturer.user else '-' }}</code></td>
+          <td>
+            {% set count = lecturer.assignments|length %}
+            <span class="badge bg-{{ 'danger' if count >= max_courses else 'secondary' }}">{{ count }} / {{ max_courses }}</span>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="text-center text-muted">No lecturers found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

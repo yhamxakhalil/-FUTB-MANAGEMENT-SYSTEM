@@ -1,0 +1,74 @@
+body {
+    background-color: #f4f6f9;
+}
+
+.demo-banner {
+    background-color: #212529;
+    color: #ffc107;
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+}
+
+.app-navbar {
+    background: linear-gradient(90deg, #1e3a5f, #2c5282);
+}
+
+.login-card {
+    margin-top: 4rem;
+    border: none;
+    border-radius: 12px;
+}
+
+.stat-card {
+    border: none;
+    border-radius: 12px;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+.status-badge {
+    font-weight: 500;
+}
+
+.status-draft {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.status-submitted {
+    background-color: #cfe2ff;
+    color: #084298;
+}
+
+.status-approved {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.status-released {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+}
+
+@media print {
+    .demo-banner, nav, footer, .btn, form {
+        display: none !important;
+    }
+}

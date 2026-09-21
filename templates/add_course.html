@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Add Course{% endblock %}
+{% block content %}
+<h3 class="mb-3"><i class="fa-solid fa-book-medical"></i> Add Course</h3>
+<div class="card" style="max-width: 560px;">
+  <div class="card-body">
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label">Course Code</label>
+        <input type="text" name="code" class="form-control" placeholder="e.g. SWE305" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Course Title</label>
+        <input type="text" name="title" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Level</label>
+        <select name="level" class="form-select">
+          {% for level in [100, 200, 300, 400] %}
+          <option value="{{ level }}">{{ level }} Level</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Semester</label>
+        <select name="semester_id" class="form-select">
+          {% for semester in semesters %}
+          <option value="{{ semester.id }}">{{ semester.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Credit Unit</label>
+        <input type="number" name="credit_unit" class="form-control" value="3" min="1" max="10" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Course Type</label>
+        <select name="course_type" class="form-select">
+          <option value="Core">Core</option>
+          <option value="Elective">Elective</option>
+          <option value="General">General</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> Add Course</button>
+      <a href="{{ url_for('admin.courses') }}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

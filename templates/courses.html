@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Courses{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3><i class="fa-solid fa-book"></i> Courses</h3>
+  <a href="{{ url_for('admin.add_course') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Course</a>
+</div>
+
+<div class="alert alert-info small">
+  <i class="fa-solid fa-circle-info"></i> This course list can be edited here as the department's curriculum is finalized.
+</div>
+
+<div class="btn-group mb-3">
+  <a href="{{ url_for('admin.courses') }}" class="btn btn-outline-secondary btn-sm {{ 'active' if not level_filter }}">All</a>
+  {% for level in [100, 200, 300, 400] %}
+    <a href="{{ url_for('admin.courses', level=level) }}" class="btn btn-outline-secondary btn-sm {{ 'active' if level_filter == level }}">{{ level }} Level</a>
+  {% endfor %}
+</div>
+
+<div class="card">
+  <div class="card-body table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Title</th>
+          <th>Level</th>
+          <th>Semester</th>
+          <th>Units</th>
+          <th>Type</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for course in courses %}
+        <tr>
+          <td><code>{{ course.code }}</code></td>
+          <td>{{ course.title }}</td>
+          <td>{{ course.level }}</td>
+          <td>{{ course.semester.name }}</td>
+          <td>{{ course.credit_unit }}</td>
+          <td><span class="badge bg-light text-dark border">{{ course.course_type }}</span></td>
+          <td>
+            <a href="{{ url_for('admin.edit_course', course_id=course.id) }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-pen"></i></a>
+            <form action="{{ url_for('admin.delete_course', course_id=course.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Remove this course? This will also remove its assignments and results.');">
+              <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="text-center text-muted">No courses found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

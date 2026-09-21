@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Home - FUTB Result Checker{% endblock %}
+{% block content %}
+<h2>Welcome</h2>
+<p>Check your examination results, or sign in as an administrator to manage courses and enter scores.</p>
+
+<div class="home-links">
+    <a href="{{ url_for('student_login') }}">Student sign in</a>
+    <a href="{{ url_for('student_signup') }}">Student sign up</a>
+    <a href="{{ url_for('admin_login') }}">Admin sign in</a>
+</div>
+
+<p class="small-note">Default admin login: username "admin", password "admin123". Change this before real use.</p>
+{% endblock %}

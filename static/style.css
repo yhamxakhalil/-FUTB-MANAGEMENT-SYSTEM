@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6fa;
+    margin: 0;
+    padding: 0;
+    color: #1a1a1a;
+}
+
+header {
+    background-color: #1f3864;
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+header a {
+    color: #f5edd3;
+    text-decoration: none;
+    margin-left: 16px;
+    font-size: 14px;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #dde3ee;
+}
+
+.wide {
+    max-width: 950px;
+}
+
+h2 {
+    color: #1f3864;
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #c3c9d6;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 20px;
+    background-color: #1f3864;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #16294d;
+}
+
+.flash {
+    background-color: #fff8e1;
+    border: 1px solid #c9a227;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+th, td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e0e4ec;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background-color: #1f3864;
+    color: white;
+}
+
+.gpa-box {
+    display: inline-block;
+    background-color: #f5edd3;
+    border: 1px solid #c9a227;
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.home-links a {
+    display: inline-block;
+    margin: 10px 10px 0 0;
+    padding: 10px 16px;
+    background-color: #1f3864;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.home-links a:hover {
+    background-color: #16294d;
+}
+
+.semester-block {
+    margin-bottom: 30px;
+}
+
+.small-note {
+    font-size: 12px;
+    color: #777;
+    margin-top: 20px;
+}

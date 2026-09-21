@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Edit Student{% endblock %}
+{% block content %}
+<h3 class="mb-3"><i class="fa-solid fa-user-pen"></i> Edit Student</h3>
+<div class="card" style="max-width: 560px;">
+  <div class="card-body">
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label">Registration Number</label>
+        <input type="text" class="form-control" value="{{ student.reg_number }}" disabled>
+        <div class="form-text">Registration numbers are unique and cannot be changed.</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input type="text" name="full_name" class="form-control" value="{{ student.full_name }}" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" value="{{ student.email or '' }}">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Level</label>
+        <select name="level" class="form-select">
+          {% for level in [100, 200, 300, 400] %}
+          <option value="{{ level }}" {{ 'selected' if student.level == level }}>{{ level }} Level</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select name="status" class="form-select">
+          {% for status in ['Active', 'Suspended', 'Graduated'] %}
+          <option value="{{ status }}" {{ 'selected' if student.status == status }}>{{ status }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <hr>
+      <div class="mb-3">
+        <label class="form-label">Reset Login Password</label>
+        <input type="text" name="new_password" class="form-control" placeholder="Leave blank to keep the current password">
+        <div class="form-text">Use this if the student forgot their password. At least 6 characters.</div>
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> Save Changes</button>
+      <a href="{{ url_for('admin.students') }}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

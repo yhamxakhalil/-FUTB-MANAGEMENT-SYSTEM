@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Enter Result{% endblock %}
+{% block content %}
+<h3 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> Enter Result</h3>
+<div class="card" style="max-width: 560px;">
+  <div class="card-body">
+    <p class="mb-1"><strong>Student:</strong> {{ student.full_name }} (<code>{{ student.reg_number }}</code>)</p>
+    <p class="mb-3"><strong>Course:</strong> {{ course.code }} - {{ course.title }} ({{ course.credit_unit }} units)</p>
+
+    {% if result %}
+    <p><span class="badge status-badge status-{{ result.status|lower }}">{{ result.status }}</span></p>
+    {% endif %}
+
+    <form method="POST" id="score-form" novalidate>
+      <div class="mb-3">
+        <label class="form-label">CA Score (0 to {{ max_ca }})</label>
+        <input type="number" step="0.5" name="ca_score" class="form-control {{ 'is-invalid' if errors.get('ca_score') }}"
+               value="{{ ca_value }}" min="0" max="{{ max_ca }}" data-max="{{ max_ca }}" data-label="CA score" required>
+        <div class="invalid-feedback score-feedback">{{ errors.get('ca_score', '') }}</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Examination Score (0 to {{ max_exam }})</label>
+        <input type="number" step="0.5" name="exam_score" class="form-control {{ 'is-invalid' if errors.get('exam_score') }}"
+               value="{{ exam_value }}" min="0" max="{{ max_exam }}" data-max="{{ max_exam }}" data-label="exam score" required>
+        <div class="invalid-feedback score-feedback">{{ errors.get('exam_score', '') }}</div>
+      </div>
+      <button type="submit" name="action" value="save" class="btn btn-outline-primary"><i class="fa-solid fa-floppy-disk"></i> Save as Draft</button>
+      <button type="submit" name="action" value="submit" class="btn btn-success"><i class="fa-solid fa-paper-plane"></i> Submit to Exam Officer</button>
+      <a href="{{ url_for('lecturer.course_students', course_id=course.id) }}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

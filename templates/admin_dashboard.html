@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block containerclass %}wide{% endblock %}
+{% block nav %}
+<a href="{{ url_for('home') }}">Home</a>
+<a href="{{ url_for('admin_logout') }}">Sign out</a>
+{% endblock %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<div class="home-links">
+    <a href="{{ url_for('add_course') }}">Add course</a>
+    <a href="{{ url_for('add_result') }}">Enter / update result</a>
+</div>
+
+<h3>Courses</h3>
+<table>
+    <tr><th>Code</th><th>Title</th><th>Units</th><th>Level</th></tr>
+    {% for c in courses %}
+    <tr>
+        <td>{{ c['code'] }}</td>
+        <td>{{ c['title'] }}</td>
+        <td>{{ c['units'] }}</td>
+        <td>{{ c['level'] }}</td>
+    </tr>
+    {% endfor %}
+    {% if courses|length == 0 %}
+    <tr><td colspan="4">No courses yet.</td></tr>
+    {% endif %}
+</table>
+
+<h3>Students</h3>
+<table>
+    <tr><th>Matric No</th><th>Full Name</th><th>Level</th></tr>
+    {% for s in students %}
+    <tr>
+        <td>{{ s['matric_no'] }}</td>
+        <td>{{ s['full_name'] }}</td>
+        <td>{{ s['level'] }}</td>
+    </tr>
+    {% endfor %}
+    {% if students|length == 0 %}
+    <tr><td colspan="3">No students have signed up yet.</td></tr>
+    {% endif %}
+</table>
+{% endblock %}

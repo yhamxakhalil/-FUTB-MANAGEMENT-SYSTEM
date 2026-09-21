@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard{% endblock %}
+{% block content %}
+<h3 class="mb-4"><i class="fa-solid fa-gauge"></i> Welcome, {{ lecturer.name }}</h3>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-primary text-white">
+      <div class="card-body">
+        <div class="stat-number">{{ assignments|length }}</div>
+        <div class="stat-label">Assigned Courses</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-info text-white">
+      <div class="card-body">
+        <div class="stat-number">{{ student_count }}</div>
+        <div class="stat-label">Students</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-warning text-dark">
+      <div class="card-body">
+        <div class="stat-number">{{ draft_count }}</div>
+        <div class="stat-label">Draft Results</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-secondary text-white">
+      <div class="card-body">
+        <div class="stat-number">{{ submitted_count }}</div>
+        <div class="stat-label">Submitted Results</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><i class="fa-solid fa-book"></i> My Assigned Courses</div>
+  <div class="card-body table-responsive">
+    <table class="table table-hover align-middle">
+      <thead><tr><th>Code</th><th>Title</th><th>Level</th><th>Semester</th><th></th></tr></thead>
+      <tbody>
+        {% for a in assignments %}
+        <tr>
+          <td>{{ a.course.code }}</td>
+          <td>{{ a.course.title }}</td>
+          <td>{{ a.course.level }}</td>
+          <td>{{ a.semester.name }}</td>
+          <td><a href="{{ url_for('lecturer.course_students', course_id=a.course.id) }}" class="btn btn-sm btn-outline-primary">Manage Results</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="text-center text-muted">No courses assigned yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Error {{ code }}{% endblock %}
+{% block content %}
+<div class="text-center py-5">
+  <h1 class="display-1 text-muted">{{ code }}</h1>
+  <p class="lead">{{ message }}</p>
+  {% if current_user.is_authenticated %}
+  <a href="{{ url_for('auth.after_login_redirect') }}" class="btn btn-primary">Go to Dashboard</a>
+  {% else %}
+  <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Go to Login</a>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}My Results{% endblock %}
+{% block containerclass %}wide{% endblock %}
+{% block nav %}
+<a href="{{ url_for('home') }}">Home</a>
+<a href="{{ url_for('student_logout') }}">Sign out</a>
+{% endblock %}
+{% block content %}
+<h2>{{ student['full_name'] }}</h2>
+<p>Matric No: {{ student['matric_no'] }} | Level: {{ student['level'] }}</p>
+
+<div class="gpa-box">CGPA: {{ cgpa }}</div>
+
+{% if semesters|length == 0 %}
+    <p>No results have been entered for you yet.</p>
+{% endif %}
+
+{% for semester, rows in semesters.items() %}
+    <div class="semester-block">
+        <h3>{{ semester }}</h3>
+        <table>
+            <tr>
+                <th>Code</th>
+                <th>Title</th>
+                <th>Units</th>
+                <th>CA</th>
+                <th>Exam</th>
+                <th>Total</th>
+                <th>Grade</th>
+            </tr>
+            {% for r in rows %}
+            <tr>
+                <td>{{ r['code'] }}</td>
+                <td>{{ r['title'] }}</td>
+                <td>{{ r['units'] }}</td>
+                <td>{{ r['ca_score'] }}</td>
+                <td>{{ r['exam_score'] }}</td>
+                <td>{{ r['total_score'] }}</td>
+                <td>{{ r['grade'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endfor %}
+{% endblock %}
